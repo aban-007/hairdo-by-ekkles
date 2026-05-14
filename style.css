@@ -15,18 +15,15 @@ body {
 }
 
 header {
-    /* Set top padding to 10mm and bottom padding to 50px as per original design */
-    padding: 10mm 20px 50px 20px;
+    padding: 2mm 20px 2mm 20px;
     border-bottom: 1px solid var(--gold);
 }
 
 h1 {
-    /* 2.5rem * 1.25 = 3.125rem */
-    font-size: 3.125rem;
+    font-size: 2.5rem;
     letter-spacing: 5px;
     margin: 0;
     text-transform: uppercase;
-    line-height: 1; /* Ensures no extra spacing affects the 10mm calculation */
 }
 
 .subtitle {
@@ -34,9 +31,9 @@ h1 {
     font-style: italic;
     margin-top: 10px;
     display: block;
+    font-size: 2.5rem; 
 }
 
-/* Gallery Container */
 .gallery-container {
     max-width: 1000px;
     margin: 50px auto;
@@ -47,7 +44,6 @@ h1 {
     height: 600px;
 }
 
-/* Instagram Post Simulation */
 .insta-slide {
     display: none;
     width: 100%;
@@ -66,7 +62,6 @@ h1 {
     to {opacity: 1;}
 }
 
-/* Action Buttons */
 .cta-button {
     display: inline-block;
     margin-top: 30px;
