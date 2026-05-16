@@ -1,3 +1,4 @@
+/* CSS UNTUK HAIR DO BY EKKLES */
 :root {
     --gold: #c5a059;
     --dark: #1a1a1a;
@@ -12,18 +13,21 @@ body {
     background-color: var(--dark);
     color: var(--light);
     text-align: center;
-    position: relative; /* Ditambahkan agar penempatan logo absolute mengacu pada body */
+    position: relative;
 }
 
-/* LOGO BARU: Diameter 25mm, Jarak Atas 5.5mm, Jarak Kiri 0mm */
+/* LOGO BARU: Menggunakan position: fixed agar tetap di posisi layar saat di-scroll */
 .site-logo {
-    position: absolute;
+    position: fixed;
     top: 5.5mm;
     left: 0mm;
     width: 25mm;
     height: 25mm;
     object-fit: contain;
-    z-index: 10;
+    z-index: 1000; /* Menaikkan z-index agar tidak tertutup oleh konten galeri */
+    cursor: pointer;
+    /* Efek transisi halus saat posisi bergeser */
+    transition: left 0.2s ease; 
 }
 
 header {
