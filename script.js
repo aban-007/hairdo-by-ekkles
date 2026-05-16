@@ -1,4 +1,4 @@
-// LOGIKA PERGANTIAN OTOMATIS
+// LOGIKA PERGANTIAN OTOMATIS GALERI
 let slideIndex = 0;
 showSlides();
 
@@ -9,7 +9,9 @@ function showSlides() {
         slides[i].style.display = "none"; 
     }
     slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}   
+    if (slideIndex > slides.length) {
+        slideIndex = 1;
+    }   
     slides[slideIndex-1].style.display = "block"; 
     
     // WAKTU PERGANTIAN (5000ms = 5 Detik)
