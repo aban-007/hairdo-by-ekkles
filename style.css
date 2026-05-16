@@ -8,15 +8,30 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif; /* Membutuhkan koneksi internet untuk font elegan */
     background-color: var(--dark);
     color: var(--light);
     text-align: center;
+    position: relative; /* Menjadi acuan untuk posisi absolute logo */
 }
 
 header {
-    padding: 2mm 20px 2mm 20px;
+    /* Adjusted: 2mm from top, and 5mm from the bottom text to the gold border */
+    padding: 2mm 20px 5mm 20px;
     border-bottom: 1px solid var(--gold);
+    position: relative;
+}
+
+/* LOGO BARU (30mm Diameter, Top: 2mm, Left: 8mm) */
+.header-logo {
+    position: absolute;
+    top: 2mm;
+    left: 8mm;
+    width: 30mm;
+    height: 30mm;
+    object-fit: contain;
+    border-radius: 50%; /* Memastikan logo tetap berbentuk lingkaran */
+    z-index: 10;
 }
 
 h1 {
@@ -31,21 +46,24 @@ h1 {
     font-style: italic;
     margin-top: 10px;
     display: block;
-    font-size: 2.5rem; 
+    /* Perubahan: Ukuran font diperbesar 1 tingkat dari 2rem menjadi 2.5rem */
+    font-size: 2.5rem;
 }
 
+/* Container Galeri */
 .gallery-container {
     max-width: 1000px;
-    margin: 50px auto;
+    margin: 50px auto 0 auto; /* Diubah: Menghilangkan margin bawah default agar kalkulasi tengah presisi */
     position: relative;
     overflow: hidden;
     border: 2px solid var(--gold);
     background: #000;
-    height: 600px;
+    height: 600px; /* Sesuaikan tinggi */
 }
 
+/* Simulasi Instagram Post */
 .insta-slide {
-    display: none;
+    display: none; /* Disembunyikan dulu */
     width: 100%;
     height: 100%;
     animation: fadeEffect 1.5s;
@@ -62,9 +80,18 @@ h1 {
     to {opacity: 1;}
 }
 
+/* Container Penyeimbang Posisi Tombol CTA agar tepat di tengah antara Galeri & Teks Alamat */
+.cta-wrapper {
+    padding: 40px 0; /* Memberikan ruang simetris atas dan bawah */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tombol Aksi */
 .cta-button {
     display: inline-block;
-    margin-top: 30px;
+    margin-top: 0; /* Diubah ke 0 karena posisi luar sudah diatur oleh .cta-wrapper */
     padding: 15px 30px;
     border: 1px solid var(--gold);
     color: var(--gold);
@@ -79,14 +106,17 @@ h1 {
     color: white;
 }
 
-footer {
-    padding: 40px;
-    font-size: 0.8rem;
-    opacity: 0.6;
+/* UPDATED SECTION: Enlarged to 150% and contemporary gold color */
+.api-note {
+    font-size: 18px; /* Increased from 12px (150%) */
+    color: var(--gold); /* Changed from #888 to contemporary gold */
+    margin: 0 20px 20px 20px; /* Diubah: Menghilangkan margin atas default agar jarak simetris */
 }
 
-.api-note {
-    font-size: 12px;
-    color: #888;
-    margin: 20px;
+/* UPDATED SECTION: Enlarged to 150% and contemporary gold color */
+footer {
+    padding: 40px;
+    font-size: 1.2rem; /* Increased from 0.8rem (150%) */
+    color: var(--gold); /* Set to gold */
+    opacity: 1; /* Removed opacity 0.6 for clarity */
 }
