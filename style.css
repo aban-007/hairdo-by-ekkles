@@ -12,19 +12,18 @@ body {
     background-color: var(--dark);
     color: var(--light);
     text-align: center;
-    position: relative; /* Diperlukan agar posisi absolut logo mengacu pada body */
+    position: relative; /* Ditambahkan agar penempatan logo absolute mengacu pada body */
 }
 
-/* LOGO BARU: Berdiameter 25mm, diletakkan di pojok kiri atas */
-.top-left-logo {
+/* LOGO BARU: Diameter 25mm, Jarak Atas 5.5mm, Jarak Kiri 0mm */
+.site-logo {
     position: absolute;
-    top: 6mm;
-    left: 1mm;
+    top: 5.5mm;
+    left: 0mm;
     width: 25mm;
     height: 25mm;
-    object-fit: cover;
-    border-radius: 50%;
-    z-index: 10; /* Memastikan logo berada di atas elemen lain */
+    object-fit: contain;
+    z-index: 10;
 }
 
 header {
