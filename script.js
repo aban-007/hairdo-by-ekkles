@@ -1,6 +1,6 @@
 // --- KONFIGURASI GALERI LOKAL ---
-const totalImages = 10; 
-const imageExtension = '.jpg'; 
+const totalImages = 30; 
+const imageExtension = '.png';
 
 
 const galleryContainer = document.getElementById('gallery');
