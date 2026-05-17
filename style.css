@@ -1,4 +1,3 @@
-/* CSS UNTUK HAIR DO BY EKKLES */
 :root {
     --gold: #c5a059;
     --dark: #1a1a1a;
@@ -16,18 +15,17 @@ body {
     position: relative;
 }
 
-/* LOGO BARU: Menggunakan position: fixed agar tetap di posisi layar saat di-scroll */
+/* LOGO BARU: Menggunakan position: fixed dengan transisi smooth agar bergerak saat di-scroll */
 .site-logo {
     position: fixed;
     top: 5.5mm;
-    left: 0mm;
+    left: 0mm; 
     width: 25mm;
     height: 25mm;
     object-fit: contain;
-    z-index: 1000; /* Menaikkan z-index agar tidak tertutup oleh konten galeri */
+    z-index: 1000; /*尊enaikkan z-index agar tidak tertutup oleh konten galeri */
     cursor: pointer;
-    /* Efek transisi halus saat posisi bergeser */
-    transition: left 0.2s ease; 
+    transition: transform 0.1s ease-out; /* Memberikan efek pergerakan yang halus */
 }
 
 header {

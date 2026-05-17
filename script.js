@@ -1,10 +1,33 @@
-// LOGIKA PERGANTIAN OTOMATIS GALERI
+// --- KONFIGURASI GALERI LOKAL ---
+const totalImages = 10; 
+const imageExtension = '.jpg'; 
+
+
+const galleryContainer = document.getElementById('gallery');
+
+// Membuat elemen gambar secara otomatis berdasarkan konfigurasi di atas
+for (let i = 1; i <= totalImages; i++) {
+    const slideDiv = document.createElement('div');
+    slideDiv.className = 'insta-slide';
+    
+    const img = document.createElement('img');
+    img.src = `gallery/${i}${imageExtension}`;
+    img.alt = `Hairdo ${i}`;
+    
+    slideDiv.appendChild(img);
+    galleryContainer.appendChild(slideDiv);
+}
+
+// LOGIKA PERGANTIAN OTOMATIS
 let slideIndex = 0;
 showSlides();
 
 function showSlides() {
     let i;
     let slides = document.getElementsByClassName("insta-slide");
+    
+    if (slides.length === 0) return; 
+
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none"; 
     }
@@ -12,27 +35,13 @@ function showSlides() {
     if (slideIndex > slides.length) {slideIndex = 1}   
     slides[slideIndex-1].style.display = "block"; 
     
-    // WAKTU PERGANTIAN (5000ms = 5 Detik)
     setTimeout(showSlides, 5000);
 }
 
-// LOGIKA INTERAKSI LOGO BERGESER 5MM
+// LOGIKA BARU: LOGO BERGESER KE ATAS MENGIKUTI SCROLL HALAMAN
 const logo = document.getElementById('logo');
-
-// Fungsi untuk menggeser logo ke kanan (5mm)
-function moveRight() {
-    logo.style.left = '5mm';
-}
-
-// Fungsi untuk mengembalikan logo ke posisi semula (0mm)
-function resetPosition() {
-    logo.style.left = '0mm';
-}
-
-// Trigger saat kursor melewati logo (hover) atau ditekan (click/hold)
-logo.addEventListener('mouseenter', moveRight);
-logo.addEventListener('mousedown', moveRight);
-
-// Trigger saat kursor keluar dari logo atau dilepas kliknya
-logo.addEventListener('mouseleave', resetPosition);
-logo.addEventListener('mouseup', resetPosition);
+window.addEventListener('scroll', () => {
+    let scrollTop = window.scrollY;
+    // Logo akan bergeser ke atas (nilai negatif pada translateY) seiring bertambahnya scroll
+    logo.style.transform = `translateY(-${scrollTop}px)`;
+});
