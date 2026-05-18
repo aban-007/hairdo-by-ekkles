@@ -8,28 +8,65 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Playfair Display', serif; /* Membutuhkan koneksi internet untuk font elegan */
+    font-family: 'Playfair Display', serif;
     background-color: var(--dark);
     color: var(--light);
     text-align: center;
     position: relative;
 }
 
-/* LOGO BARU: Menggunakan position: fixed dengan transisi smooth agar bergerak saat di-scroll */
+/* LOGO BARU: Posisi fixed */
 .site-logo {
     position: fixed;
-    top: 5.5mm;
+    top: 8mm;
     left: 0mm; 
     width: 25mm;
     height: 25mm;
     object-fit: contain;
-    z-index: 1000; /*尊enaikkan z-index agar tidak tertutup oleh konten galeri */
+    z-index: 1000;
     cursor: pointer;
-    transition: transform 0.1s ease-out; /* Memberikan efek pergerakan yang halus */
+}
+
+/* TOMBOL WHATSAPP */
+.wa-logo-container {
+    position: fixed;
+    bottom: 8mm;
+    right: 5mm;
+    width: 50px;
+    height: 50px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.wa-logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ANIMASI MEMANTUL WHATSAPP */
+@keyframes bounceUp {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(-5mm); }
+    100% { transform: translateY(0); }
+}
+
+.bounce-animation {
+    animation: bounceUp 0.4s ease-in-out;
+}
+
+/* ANIMASI MEMANTUL LOGO */
+@keyframes bounceDown {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(5mm); }
+    100% { transform: translateY(0); }
+}
+
+.logo-bounce-animation {
+    animation: bounceDown 0.4s ease-in-out;
 }
 
 header {
-    /* Adjusted: 2mm from top, and 5mm from the bottom text to the gold border */
     padding: 2mm 20px 5mm 20px;
     border-bottom: 1px solid var(--gold);
 }
@@ -46,24 +83,47 @@ h1 {
     font-style: italic;
     margin-top: 10px;
     display: block;
-    /* Perubahan: Ukuran font diperbesar 1 tingkat dari 2rem menjadi 2.5rem */
     font-size: 2.5rem;
+}
+
+/* Wrapper relatif untuk galeri dan kotak luar */
+.gallery-wrapper {
+    max-width: 1000px;
+    margin: 50px auto 0 auto;
+    position: relative;
 }
 
 /* Container Galeri */
 .gallery-container {
-    max-width: 1000px;
-    margin: 50px auto 0 auto; /* Diubah: Menghilangkan margin bawah default agar kalkulasi tengah presisi */
+    width: 100%;
     position: relative;
     overflow: hidden;
     border: 2px solid var(--gold);
     background: #000;
-    height: 600px; /* Sesuaikan tinggi */
+    height: 600px;
+    box-sizing: border-box;
+}
+
+/* KOTAK BARU */
+.info-box {
+    position: fixed;
+    width: 15mm;
+    height: 15mm;
+    border: 2px solid var(--gold);
+    background: var(--dark);
+    box-sizing: border-box;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--gold);
 }
 
 /* Simulasi Instagram Post */
 .insta-slide {
-    display: none; /* Disembunyikan dulu */
+    display: none;
     width: 100%;
     height: 100%;
     animation: fadeEffect 1.5s;
@@ -80,9 +140,9 @@ h1 {
     to {opacity: 1;}
 }
 
-/* Container Penyeimbang Posisi Tombol CTA agar tepat di tengah antara Galeri & Teks Alamat */
+/* Container Penyeimbang Posisi Tombol CTA */
 .cta-wrapper {
-    padding: 40px 0; /* Memberikan ruang simetris atas dan bawah */
+    padding: 40px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,7 +151,7 @@ h1 {
 /* Tombol Aksi */
 .cta-button {
     display: inline-block;
-    margin-top: 0; /* Diubah ke 0 karena posisi luar sudah diatur oleh .cta-wrapper */
+    margin-top: 0;
     padding: 15px 30px;
     border: 1px solid var(--gold);
     color: var(--gold);
@@ -106,17 +166,17 @@ h1 {
     color: white;
 }
 
-/* UPDATED SECTION: Enlarged to 150% and contemporary gold color */
+/* UPDATED SECTION */
 .api-note {
-    font-size: 18px; /* Increased from 12px (150%) */
-    color: var(--gold); /* Changed from #888 to contemporary gold */
-    margin: 0 20px 20px 20px; /* Diubah: Menghilangkan margin atas default agar jarak simetris */
+    font-size: 18px;
+    color: var(--gold);
+    margin: 0 20px 20px 20px;
 }
 
-/* UPDATED SECTION: Enlarged to 150% and contemporary gold color */
+/* UPDATED SECTION */
 footer {
     padding: 40px;
-    font-size: 1.2rem; /* Increased from 0.8rem (150%) */
-    color: var(--gold); /* Set to gold */
-    opacity: 1; /* Removed opacity 0.6 for clarity */
+    font-size: 1.2rem;
+    color: var(--gold);
+    opacity: 1;
 }
