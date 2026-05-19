@@ -1,5 +1,5 @@
 // --- KONFIGURASI GALERI LOKAL ---
-const totalImages = 30; 
+const totalImages = 38; 
 const imageExtension = '.png'; 
 
 
