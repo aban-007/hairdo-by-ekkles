@@ -2,6 +2,7 @@
 const totalImages = 30; 
 const imageExtension = '.png'; 
 
+
 const galleryContainer = document.getElementById('gallery');
 const imgNumberBox = document.getElementById('imgNumberBox');
 
@@ -85,12 +86,11 @@ window.addEventListener('scroll', () => {
     // Hitung di mana posisi bottom waLogo seharusnya jika tidak diinterupsi scroll
     const currentWaBase = viewportHeight - defaultBottomPx;
 
-    // Jika base melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah
+    // Jika base melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah (Mencegah melintasi baseline)
     if (currentWaBase >= galleryBase) {
-        // Berhenti tepat di base galleryContainer, lalu naik permanen 3mm (+3mm dari base galeri)
         const targetBottom = viewportHeight - galleryBase + (3 * mmToPx);
         waLogo.style.bottom = `${targetBottom}px`;
-        imgNumberBox.style.bottom = `${targetBottom}px`; // Aligned sempurna dengan WA Logo
+        imgNumberBox.style.bottom = `${targetBottom}px`; // Aligned sempurna dengan WA Logo & batas bawah galeri
     } else {
         // Kembali ke posisi default awal 3mm jika belum mencapai batas bawah galeri
         waLogo.style.bottom = `3mm`;
