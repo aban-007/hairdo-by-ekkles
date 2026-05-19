@@ -28,7 +28,7 @@ body {
     transition: transform 0.1s ease-out; /* Memberikan efek pergerakan yang halus */
 }
 
-/* WHATSAPP LOGO: Ditempatkan di kanan bawah menggunakan fixed positioning dengan rounded corners */
+/* WHATSAPP LOGO: Fixed size, safely contained inside the bottom right corner */
 .wa-logo {
     position: fixed;
     bottom: 3mm;
@@ -39,6 +39,7 @@ body {
     z-index: 1000;
     cursor: pointer;
     border-radius: 12px; /* All corners rounded */
+    box-sizing: border-box; /* Ensures size is fixed and strictly contained */
     transition: transform 0.1s ease-out, bottom 0.2s ease-out;
 }
 

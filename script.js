@@ -2,7 +2,6 @@
 const totalImages = 38; 
 const imageExtension = '.png'; 
 
-
 const galleryContainer = document.getElementById('gallery');
 const imgNumberBox = document.getElementById('imgNumberBox');
 
