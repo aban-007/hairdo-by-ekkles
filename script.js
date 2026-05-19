@@ -45,13 +45,13 @@ function showSlides() {
 const logo = document.getElementById('logo');
 const waLogo = document.getElementById('waLogo');
 
-// Fungsi untuk menghitung dan mengatur posisi horizontal kotak nomor gambar agar selalu 5mm dari sisi kiri galeri
+// Fungsi untuk menghitung dan mengatur posisi horizontal kotak nomor gambar
 function adjustNumberBoxLeftPosition() {
     const galleryRect = galleryContainer.getBoundingClientRect();
     const mmToPx = 3.78;
     const targetLeft = galleryRect.left - (15 * mmToPx) - (5 * mmToPx);
     
-    // Pengaman Handphone (Cellphone): Jika layar kecil, samakan jaraknya dari kiri dengan WA logo dari kanan (5mm)
+    // Pengaman Handphone (Cellphone)
     if (targetLeft < 0 || window.innerWidth < 1160) {
         imgNumberBox.style.left = `5mm`;
     } else {
@@ -85,15 +85,15 @@ window.addEventListener('scroll', () => {
     // Hitung di mana posisi bottom waLogo seharusnya jika tidak diinterupsi scroll
     const currentWaBase = viewportHeight - defaultBottomPx;
 
-    // Jika base melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah (Mencegah melintasi baseline)
+    // Jika base melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah
     if (currentWaBase >= galleryBase) {
         const targetBottom = viewportHeight - galleryBase + (3 * mmToPx);
         waLogo.style.bottom = `${targetBottom}px`;
-        imgNumberBox.style.bottom = `${targetBottom}px`; // Aligned sempurna dengan WA Logo & batas bawah galeri
+        imgNumberBox.style.bottom = `${targetBottom}px`; 
     } else {
         // Kembali ke posisi default awal 3mm jika belum mencapai batas bawah galeri
         waLogo.style.bottom = `3mm`;
-        imgNumberBox.style.bottom = `3mm`; // Aligned sempurna dengan WA Logo
+        imgNumberBox.style.bottom = `3mm`; 
     }
 });
 
@@ -105,7 +105,7 @@ waLogo.addEventListener('click', () => {
     }, 300);
 });
 
-// LOGIKA KLIK KOTAK NOMOR: Memiliki fitur animasi memantul yang sama persis dengan walogo
+// LOGIKA KLIK KOTAK NOMOR
 imgNumberBox.addEventListener('click', () => {
     imgNumberBox.classList.add('wa-bounce-active');
     setTimeout(() => {
