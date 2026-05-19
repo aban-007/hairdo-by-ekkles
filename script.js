@@ -3,7 +3,6 @@ const totalImages = 30;
 const imageExtension = '.png'; 
 
 const galleryContainer = document.getElementById('gallery');
-const infoBox = document.getElementById('infoBox');
 
 // Membuat elemen gambar secara otomatis berdasarkan konfigurasi di atas
 for (let i = 1; i <= totalImages; i++) {
@@ -35,43 +34,50 @@ function showSlides() {
     if (slideIndex > slides.length) {slideIndex = 1}   
     slides[slideIndex-1].style.display = "block"; 
     
-    // UPDATE NILAI ANGKA DI INFO BOX (Format 2-Digit)
-    infoBox.textContent = String(slideIndex).padStart(2, '0');
-    
     setTimeout(showSlides, 5000);
 }
 
-// LOGIKA PINNED / FIXED POSITION UNTUK INFO BOX AGAR TETAP DIAM SAAT SCROLL
-function positionInfoBox() {
-    const rect = galleryContainer.getBoundingClientRect();
-    // Konversi 5mm ke pixel secara perkiraan (1mm ≈ 3.78px)
-    const gapInPx = 5 * 3.779528;
-    
-    // Mengatur posisi awal sejajar kanan luar galeri + 5mm
-    infoBox.style.top = `${rect.top}px`;
-    infoBox.style.left = `${rect.right + gapInPx}px`;
-}
-
-// Jalankan kalkulasi posisi hanya saat loading awal dan resizing jendela browser
-window.addEventListener('load', positionInfoBox);
-window.addEventListener('resize', positionInfoBox);
-
-// LOGIKA BARU: INTERAKSI LOGO (EFEK MEMANTUL KE BAWAH SAAT DIKLIK)
+// LOGIKA BARU: LOGO BERGESER KE ATAS MENGIKUTI SCROLL HALAMAN
 const logo = document.getElementById('logo');
-logo.addEventListener('click', () => {
-    logo.classList.add('logo-bounce-animation');
-    
-    setTimeout(() => {
-        logo.classList.remove('logo-bounce-animation');
-    }, 400);
+window.addEventListener('scroll', () => {
+    let scrollTop = window.scrollY;
+    // Logo akan bergeser ke atas (nilai negatif pada translateY) seiring bertambahnya scroll
+    logo.style.transform = `translateY(-${scrollTop}px)`;
 });
 
-// LOGIKA BARU: INTERAKSI TOMBOL WHATSAPP (EFEK MEMANTUL)
-const waButton = document.getElementById('waButton');
-waButton.addEventListener('click', () => {
-    waButton.classList.add('bounce-animation');
-    
-    setTimeout(() => {
-        waButton.classList.remove('bounce-animation');
-    }, 400);
+// --- LOGIKA BARU: INTERAKSI & PEMBATASAN GERAK WA LOGO ---
+const waLogo = document.getElementById('waLogo');
+
+// 1. Efek Klik: Bergerak ke atas 5mm sebentar lalu kembali bawah
+waLogo.addEventListener('click', () => {
+    // Hapus class jika animasi sedang berjalan agar bisa dipicu kembali saat diklik ulang
+    waLogo.classList.remove('wa-bounce-animation');
+    // Memicu reflow browser agar animasi reset
+    void waLogo.offsetWidth; 
+    // Jalankan animasi kembali
+    waLogo.classList.add('wa-bounce-animation');
+});
+
+// 2. Efek Scroll: Berhenti di batas bawah galleryContainer (tidak ikut turun)
+window.addEventListener('scroll', () => {
+    const galleryRect = galleryContainer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Mengonversi jarak 5mm default dari bottom ke satuan pixel standar
+    const defaultBottomPx = (5 * 96) / 25.4; 
+
+    // Menghitung posisi absolut batas bawah galeri terhadap viewport screen saat ini
+    const galleryBottomAbsolute = galleryRect.bottom;
+
+    // Jika batas bawah galeri sejajar atau lebih tinggi dari letak seharusnya waLogo (windowHeight - defaultBottomPx)
+    if (galleryBottomAbsolute <= (windowHeight - defaultBottomPx)) {
+        // Kunci posisi bottom waLogo agar sejajar dengan bagian bawah galeri
+        let dynamicBottom = windowHeight - galleryBottomAbsolute;
+        waLogo.style.position = 'fixed';
+        waLogo.style.bottom = `${dynamicBottom}px`;
+    } else {
+        // Kembalikan ke posisi semula di pojok kanan bawah layar (5mm dari dasar)
+        waLogo.style.position = 'fixed';
+        waLogo.style.bottom = '5mm';
+    }
 });
