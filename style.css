@@ -1,3 +1,4 @@
+/* CSS DALAM SATU FILE */
 :root {
     --gold: #c5a059;
     --dark: #1a1a1a;
@@ -23,9 +24,33 @@ body {
     width: 25mm;
     height: 25mm;
     object-fit: contain;
-    z-index: 1000; /* Menaikkan z-index agar tidak tertutup oleh konten galeri */
+    z-index: 1000; /* Nyalakan kembali z-index agar tidak tertutup oleh konten galeri */
     cursor: pointer;
     transition: transform 0.1s ease-out; /* Memberikan efek pergerakan yang halus */
+}
+
+/* WHATSAPP LOGO: Ditempatkan di kanan bawah menggunakan fixed positioning */
+.wa-logo {
+    position: fixed;
+    bottom: 3mm;
+    right: 5mm;
+    width: 50px; /* Ukuran proporsional untuk tombol chat floating */
+    height: 50px;
+    object-fit: contain;
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.1s ease-out, bottom 0.2s ease-out;
+}
+
+/* Animasi klik: naik 5mm lalu kembali */
+@keyframes waBounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5mm); }
+    100% { transform: translateY(0); }
+}
+
+.wa-bounce-active {
+    animation: waBounce 0.3s ease-in-out;
 }
 
 header {
@@ -119,33 +144,4 @@ footer {
     font-size: 1.2rem; /* Increased from 0.8rem (150%) */
     color: var(--gold); /* Set to gold */
     opacity: 1; /* Removed opacity 0.6 for clarity */
-}
-
-/* --- FITUR BARU: WHATSAPP FLOATING LOGO --- */
-.wa-logo-container {
-    position: fixed;
-    bottom: 5mm;
-    right: 5mm;
-    width: 50px; /* Anda bisa menyesuaikan ukuran logo di sini */
-    height: 50px;
-    z-index: 1001;
-    cursor: pointer;
-    transition: bottom 0.1s ease-out; /* Smooth transition saat tertahan di batas galeri */
-}
-
-.wa-logo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-/* Animasi membal ke atas 5mm saat ditekan */
-@keyframes waBounce {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-5mm); }
-    100% { transform: translateY(0); }
-}
-
-.wa-bounce-animation {
-    animation: waBounce 0.4s ease-out;
 }

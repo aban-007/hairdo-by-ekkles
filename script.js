@@ -37,47 +37,49 @@ function showSlides() {
     setTimeout(showSlides, 5000);
 }
 
-// LOGIKA BARU: LOGO BERGESER KE ATAS MENGIKUTI SCROLL HALAMAN
+// LOGIKA LOGO UTAMA BERGESER KE ATAS MENGIKUTI SCROLL HALAMAN
 const logo = document.getElementById('logo');
-window.addEventListener('scroll', () => {
-    let scrollTop = window.scrollY;
-    // Logo akan bergeser ke atas (nilai negatif pada translateY) seiring bertambahnya scroll
-    logo.style.transform = `translateY(-${scrollTop}px)`;
-});
-
-// --- LOGIKA BARU: INTERAKSI & PEMBATASAN GERAK WA LOGO ---
 const waLogo = document.getElementById('waLogo');
 
-// 1. Efek Klik: Bergerak ke atas 5mm sebentar lalu kembali bawah
-waLogo.addEventListener('click', () => {
-    // Hapus class jika animasi sedang berjalan agar bisa dipicu kembali saat diklik ulang
-    waLogo.classList.remove('wa-bounce-animation');
-    // Memicu reflow browser agar animasi reset
-    void waLogo.offsetWidth; 
-    // Jalankan animasi kembali
-    waLogo.classList.add('wa-bounce-animation');
+window.addEventListener('scroll', () => {
+    let scrollTop = window.scrollY;
+    // Logo utama bergeser ke atas
+    logo.style.transform = `translateY(-${scrollTop}px)`;
+
+    // LOGIKA DETEKSI POSISI STRUKTURAL UNTUK WA LOGO
+    const galleryRect = galleryContainer.getBoundingClientRect();
+    const waRect = waLogo.getBoundingClientRect();
+
+    // Batas bawah (base) dari gallery container relatif terhadap viewport
+    const galleryBase = galleryRect.bottom;
+    // Batas bawah awal walogo (sebelum terkena stop/shift ke atas) jika berada pada posisi bottom: 3mm default
+    const viewportHeight = window.innerHeight;
+    
+    // Konversi mm ke pixel kasar untuk kalkulasi (1mm ~ 3.78px)
+    const mmToPx = 3.78; 
+    const defaultBottomPx = 3 * mmToPx;
+    const waHeight = waRect.height;
+    
+    // Hitung di mana posisi bottom waLogo seharusnya jika tidak diinterupsi scroll
+    const currentWaBase = viewportHeight - defaultBottomPx;
+
+    // Jika base waLogo melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah
+    if (currentWaBase >= galleryBase) {
+        // Berhenti di base galleryContainer, lalu naik permanen 3mm (+3mm dari base galeri, sehingga posisinya sedikit terangkat)
+        const targetBottom = viewportHeight - galleryBase + (3 * mmToPx);
+        waLogo.style.bottom = `${targetBottom}px`;
+    } else {
+        // Kembali ke posisi default awal 3mm jika belum mencapai batas bawah galeri
+        waLogo.style.bottom = `3mm`;
+    }
 });
 
-// 2. Efek Scroll: Berhenti di batas bawah galleryContainer (tidak ikut turun)
-window.addEventListener('scroll', () => {
-    const galleryRect = galleryContainer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Mengonversi jarak 5mm default dari bottom ke satuan pixel standar
-    const defaultBottomPx = (5 * 96) / 25.4; 
-
-    // Menghitung posisi absolut batas bawah galeri terhadap viewport screen saat ini
-    const galleryBottomAbsolute = galleryRect.bottom;
-
-    // Jika batas bawah galeri sejajar atau lebih tinggi dari letak seharusnya waLogo (windowHeight - defaultBottomPx)
-    if (galleryBottomAbsolute <= (windowHeight - defaultBottomPx)) {
-        // Kunci posisi bottom waLogo agar sejajar dengan bagian bawah galeri
-        let dynamicBottom = windowHeight - galleryBottomAbsolute;
-        waLogo.style.position = 'fixed';
-        waLogo.style.bottom = `${dynamicBottom}px`;
-    } else {
-        // Kembalikan ke posisi semula di pojok kanan bawah layar (5mm dari dasar)
-        waLogo.style.position = 'fixed';
-        waLogo.style.bottom = '5mm';
-    }
+// LOGIKA KLIK WA LOGO: Memantul naik 5mm sesaat lalu kembali
+waLogo.addEventListener('click', () => {
+    waLogo.classList.add('wa-bounce-active');
+    
+    // Hapus class setelah animasi selesai (300ms) agar bisa di-trigger kembali pada klik berikutnya
+    setTimeout(() => {
+        waLogo.classList.remove('wa-bounce-active');
+    }, 300);
 });
