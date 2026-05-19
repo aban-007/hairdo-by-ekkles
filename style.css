@@ -1,4 +1,3 @@
-/* CSS DALAM SATU FILE */
 :root {
     --gold: #c5a059;
     --dark: #1a1a1a;
@@ -16,7 +15,7 @@ body {
     position: relative;
 }
 
-/* LOGO BARU: Menggunakan position: fixed dengan transisi smooth agar bergerak saat di-scroll */
+/* LOGO BARU */
 .site-logo {
     position: fixed;
     top: 5.5mm;
@@ -24,21 +23,42 @@ body {
     width: 25mm;
     height: 25mm;
     object-fit: contain;
-    z-index: 1000; /* Nyalakan kembali z-index agar tidak tertutup oleh konten galeri */
+    z-index: 1000;
     cursor: pointer;
-    transition: transform 0.1s ease-out; /* Memberikan efek pergerakan yang halus */
+    transition: transform 0.1s ease-out;
 }
 
-/* WHATSAPP LOGO: Ditempatkan di kanan bawah menggunakan fixed positioning */
+/* WHATSAPP LOGO */
 .wa-logo {
     position: fixed;
     bottom: 3mm;
     right: 5mm;
-    width: 50px; /* Ukuran proporsional untuk tombol chat floating */
+    width: 50px;
     height: 50px;
     object-fit: contain;
     z-index: 1000;
     cursor: pointer;
+    transition: transform 0.1s ease-out, bottom 0.2s ease-out;
+}
+
+/* KOTAK INDIKATOR NOMOR GAMBAR BARU */
+.img-number-box {
+    position: fixed;
+    bottom: 3mm;
+    left: 0px; 
+    width: 15mm;
+    height: 15mm;
+    border: 2px solid var(--gold);
+    background-color: rgba(26, 26, 26, 0.8);
+    color: var(--gold);
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    box-sizing: border-box;
     transition: transform 0.1s ease-out, bottom 0.2s ease-out;
 }
 
@@ -54,7 +74,6 @@ body {
 }
 
 header {
-    /* Adjusted: 2mm from top, and 5mm from the bottom text to the gold border */
     padding: 2mm 20px 5mm 20px;
     border-bottom: 1px solid var(--gold);
 }
@@ -71,24 +90,23 @@ h1 {
     font-style: italic;
     margin-top: 10px;
     display: block;
-    /* Perubahan: Ukuran font diperbesar 1 tingkat dari 2rem menjadi 2.5rem */
     font-size: 2.5rem;
 }
 
 /* Container Galeri */
 .gallery-container {
     max-width: 1000px;
-    margin: 50px auto 0 auto; /* Diubah: Menghilangkan margin bawah default agar kalkulasi tengah presisi */
+    margin: 50px auto 0 auto;
     position: relative;
     overflow: hidden;
     border: 2px solid var(--gold);
     background: #000;
-    height: 600px; /* Sesuaikan tinggi */
+    height: 600px;
 }
 
 /* Simulasi Instagram Post */
 .insta-slide {
-    display: none; /* Disembunyikan dulu */
+    display: none;
     width: 100%;
     height: 100%;
     animation: fadeEffect 1.5s;
@@ -105,9 +123,9 @@ h1 {
     to {opacity: 1;}
 }
 
-/* Container Penyeimbang Posisi Tombol CTA agar tepat di tengah antara Galeri & Teks Alamat */
+/* Container Penyeimbang Posisi Tombol CTA */
 .cta-wrapper {
-    padding: 40px 0; /* Memberikan ruang simetris atas dan bawah */
+    padding: 40px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,7 +134,7 @@ h1 {
 /* Tombol Aksi */
 .cta-button {
     display: inline-block;
-    margin-top: 0; /* Diubah ke 0 karena posisi luar sudah diatur oleh .cta-wrapper */
+    margin-top: 0;
     padding: 15px 30px;
     border: 1px solid var(--gold);
     color: var(--gold);
@@ -131,17 +149,14 @@ h1 {
     color: white;
 }
 
-/* UPDATED SECTION: Enlarged to 150% and contemporary gold color */
 .api-note {
-    font-size: 18px; /* Increased from 12px (150%) */
-    color: var(--gold); /* Changed from #888 to contemporary gold */
-    margin: 0 20px 20px 20px; /* Diubah: Menghilangkan margin atas default agar jarak simetris */
+    font-size: 18px;
+    color: var(--gold);
+    margin: 0 20px 20px 20px;
 }
 
-/* UPDATED SECTION: Enlarged to 150% and contemporary gold color */
 footer {
     padding: 40px;
-    font-size: 1.2rem; /* Increased from 0.8rem (150%) */
-    color: var(--gold); /* Set to gold */
-    opacity: 1; /* Removed opacity 0.6 for clarity */
+    font-size: 1.2rem;
+    color: var(--gold);
 }

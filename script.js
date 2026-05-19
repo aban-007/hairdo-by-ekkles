@@ -3,6 +3,7 @@ const totalImages = 30;
 const imageExtension = '.png'; 
 
 const galleryContainer = document.getElementById('gallery');
+const imgNumberBox = document.getElementById('imgNumberBox');
 
 // Membuat elemen gambar secara otomatis berdasarkan konfigurasi di atas
 for (let i = 1; i <= totalImages; i++) {
@@ -34,6 +35,9 @@ function showSlides() {
     if (slideIndex > slides.length) {slideIndex = 1}   
     slides[slideIndex-1].style.display = "block"; 
     
+    // Update angka pada kotak indikator menjadi format 2 digit (misal: 01, 02, dst)
+    imgNumberBox.textContent = slideIndex.toString().padStart(2, '0');
+    
     setTimeout(showSlides, 5000);
 }
 
@@ -41,45 +45,71 @@ function showSlides() {
 const logo = document.getElementById('logo');
 const waLogo = document.getElementById('waLogo');
 
+// Fungsi untuk menghitung dan mengatur posisi horizontal kotak nomor gambar agar selalu 5mm dari sisi kiri galeri
+function adjustNumberBoxLeftPosition() {
+    const galleryRect = galleryContainer.getBoundingClientRect();
+    const mmToPx = 3.78;
+    const targetLeft = galleryRect.left - (15 * mmToPx) - (5 * mmToPx);
+    
+    // Jika layar terlalu kecil (mobile), amankan posisi agar tidak keluar dari viewport kiri
+    if (targetLeft < 5) {
+        imgNumberBox.style.left = `5px`;
+    } else {
+        imgNumberBox.style.left = `${targetLeft}px`;
+    }
+}
+
+// Jalankan fungsi saat load pertama dan ketika window di-resize
+adjustNumberBoxLeftPosition();
+window.addEventListener('resize', adjustNumberBoxLeftPosition);
+
 window.addEventListener('scroll', () => {
     let scrollTop = window.scrollY;
     // Logo utama bergeser ke atas
     logo.style.transform = `translateY(-${scrollTop}px)`;
 
-    // LOGIKA DETEKSI POSISI STRUKTURAL UNTUK WA LOGO
+    // LOGIKA DETEKSI POSISI STRUKTURAL UNTUK WA LOGO & KOTAK NOMOR GAMBAR
     const galleryRect = galleryContainer.getBoundingClientRect();
-    const waRect = waLogo.getBoundingClientRect();
+    
+    // Jalankan penyesuaian horizontal saat scroll agar posisi kiri tetap konsisten
+    adjustNumberBoxLeftPosition();
 
     // Batas bawah (base) dari gallery container relatif terhadap viewport
     const galleryBase = galleryRect.bottom;
-    // Batas bawah awal walogo (sebelum terkena stop/shift ke atas) jika berada pada posisi bottom: 3mm default
     const viewportHeight = window.innerHeight;
     
     // Konversi mm ke pixel kasar untuk kalkulasi (1mm ~ 3.78px)
     const mmToPx = 3.78; 
     const defaultBottomPx = 3 * mmToPx;
-    const waHeight = waRect.height;
     
     // Hitung di mana posisi bottom waLogo seharusnya jika tidak diinterupsi scroll
     const currentWaBase = viewportHeight - defaultBottomPx;
 
-    // Jika base waLogo melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah
+    // Jika base melewati atau sejajar dengan base dari galleryContainer saat scroll ke bawah
     if (currentWaBase >= galleryBase) {
-        // Berhenti di base galleryContainer, lalu naik permanen 3mm (+3mm dari base galeri, sehingga posisinya sedikit terangkat)
+        // Berhenti di base galleryContainer, lalu naik permanen 3mm (+3mm dari base galeri)
         const targetBottom = viewportHeight - galleryBase + (3 * mmToPx);
         waLogo.style.bottom = `${targetBottom}px`;
+        imgNumberBox.style.bottom = `${targetBottom}px`; // Aligned dengan walogo
     } else {
         // Kembali ke posisi default awal 3mm jika belum mencapai batas bawah galeri
         waLogo.style.bottom = `3mm`;
+        imgNumberBox.style.bottom = `3mm`; // Aligned dengan walogo
     }
 });
 
 // LOGIKA KLIK WA LOGO: Memantul naik 5mm sesaat lalu kembali
 waLogo.addEventListener('click', () => {
     waLogo.classList.add('wa-bounce-active');
-    
-    // Hapus class setelah animasi selesai (300ms) agar bisa di-trigger kembali pada klik berikutnya
     setTimeout(() => {
         waLogo.classList.remove('wa-bounce-active');
+    }, 300);
+});
+
+// LOGIKA KLIK KOTAK NOMOR: Memiliki fitur animasi memantul yang sama dengan walogo
+imgNumberBox.addEventListener('click', () => {
+    imgNumberBox.classList.add('wa-bounce-active');
+    setTimeout(() => {
+        imgNumberBox.classList.remove('wa-bounce-active');
     }, 300);
 });
