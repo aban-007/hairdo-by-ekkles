@@ -33,6 +33,14 @@ body{
     width: 20mm;
     height: 20mm;
     object-fit: contain;
+    cursor: pointer;
+    /* Menambahkan transisi halus saat posisi 'top' berubah */
+    transition: top 0.15s ease-in-out; 
+}
+
+/* Class pembantu saat logo ditekan (turun 5mm dari posisi awal 20mm) */
+.top-left-logo.pressed {
+    top: 25mm;
 }
 
 /* Symmetrical upper right WhatsApp logo placement */
@@ -134,7 +142,7 @@ button:hover{
 
 <body>
 
-<img src="logo.png" alt="Logo By Ekkles" class="top-left-logo">
+<img src="logo.png" alt="Logo By Ekkles" class="top-left-logo" id="logoEkkles">
 
 <a href="https://wa.me/6281314798161" target="_blank">
     <img src="walogo.png" alt="WhatsApp" class="top-right-wa">
@@ -203,6 +211,24 @@ button:hover{
 </div>
 
 <script>
+
+// Fitur Animasi Logo & Pengalihan Tautan (Link)
+const logo = document.getElementById('logoEkkles');
+logo.addEventListener('click', () => {
+    // 1. Logo turun ke bawah (5mm)
+    logo.classList.add('pressed');
+
+    // 2. Setelah 150ms, logo naik kembali ke posisi semula
+    setTimeout(() => {
+        logo.classList.remove('pressed');
+    }, 150);
+
+    // 3. Setelah animasi selesai (total 300ms), halaman berpindah ke tautan baru
+    setTimeout(() => {
+        window.location.href = "https://aban-007.github.io/hairdo-by-ekkles/";
+    }, 300);
+});
+
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbwugLvzB92tYEyP5O9UBzjXGDh7ZnmgvK_9zvYnkmTNko5yurCXagXbOmnj5padnHIU/exec";
 
