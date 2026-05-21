@@ -106,11 +106,16 @@ logo.addEventListener('click', () => {
     }, 300);
 });
 
-// LOGIKA KLIK WA LOGO: Memantul naik 5mm sesaat lalu kembali
-waLogo.addEventListener('click', () => {
+// LOGIKA KLIK WA LOGO: Memantul naik 5mm sesaat lalu kirim pesan WA baru
+waLogo.addEventListener('click', (e) => {
+    e.preventDefault(); // Mencegah link langsung terbuka sebelum animasi selesai
     waLogo.classList.add('wa-bounce-active');
+    
     setTimeout(() => {
         waLogo.classList.remove('wa-bounce-active');
+        // Teks pesan yang sudah di-encode dengan aman untuk URL
+        const pesan = encodeURIComponent("Halo Kak saya sudah tekan tombol putih kiri atas, isi Form sudah saya kirim juga saya tunggu kabarnya yaa Kak Terima Kasih");
+        window.open(`https://wa.me/6281314798161?text=${pesan}`, '_blank');
     }, 300);
 });
 
