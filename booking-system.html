@@ -22,19 +22,17 @@ body{
     background:var(--dark);
     color:var(--light);
     font-family:Arial, sans-serif;
-    position: relative;
+    position: relative; /* Menambahkan relative agar posisi logo absolut bekerja dengan baik */
 }
 
-/* Logo styling based on instruction */
+/* Style Baru untuk Logo di Pojok Kiri Atas */
 .top-left-logo {
     position: absolute;
     top: 5.5mm;
     left: 0mm;
-    width: 35mm;
-    height: 35mm;
-    border-radius: 50%;
-    object-fit: cover;
-    z-index: 1000;
+    height: 60px; /* Ukuran tinggi disesuaikan agar proporsional, silakan ubah jika perlu */
+    width: auto;
+    object-fit: contain;
 }
 
 .container{
@@ -135,19 +133,11 @@ button:hover{
     padding:30px;
     color:#888;
 }
-
-/* Responsiveness adjustments to prevent logo overlapping content on tiny screens if needed */
-@media (max-width: 768px) {
-    .container {
-        padding-top: 40mm; /* Give space for logo on small screens so it doesn't cover heading */
-    }
-}
 </style>
 </head>
 
 <body>
 
-<!-- Added logo according to instructions -->
 <img src="logo.png" alt="Logo By Ekkles" class="top-left-logo">
 
 <div class="container">
