@@ -97,6 +97,15 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// LOGIKA KLIK LOGO UTAMA: Memantul turun 5mm sesaat, lalu pindah halaman
+logo.addEventListener('click', () => {
+    logo.classList.add('logo-bounce-active');
+    setTimeout(() => {
+        logo.classList.remove('logo-bounce-active');
+        window.location.href = "https://aban-007.github.io/hairdo-by-ekkles/booking-system.html";
+    }, 300);
+});
+
 // LOGIKA KLIK WA LOGO: Memantul naik 5mm sesaat lalu kembali
 waLogo.addEventListener('click', () => {
     waLogo.classList.add('wa-bounce-active');

@@ -65,6 +65,17 @@ body {
     transition: transform 0.1s ease-out, bottom 0.2s ease-out;
 }
 
+/* Animasi klik logo utama: turun 5mm lalu kembali */
+@keyframes logoBounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(5mm); }
+    100% { transform: translateY(0); }
+}
+
+.logo-bounce-active {
+    animation: logoBounce 0.3s ease-in-out;
+}
+
 /* Animasi klik: naik 5mm lalu kembali */
 @keyframes waBounce {
     0% { transform: translateY(0); }
