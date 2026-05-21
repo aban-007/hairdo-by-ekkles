@@ -51,6 +51,14 @@ body{
     width: 20mm;
     height: 20mm;
     object-fit: contain;
+    cursor: pointer;
+    /* Menambahkan transisi halus saat posisi 'top' berubah */
+    transition: top 0.15s ease-in-out;
+}
+
+/* Class pembantu saat wa logo ditekan (turun 5mm dari posisi awal 20mm) */
+.top-right-wa.pressed {
+    top: 25mm;
 }
 
 .container{
@@ -194,9 +202,7 @@ button:hover{
 
 <img src="logo.png" alt="Logo By Ekkles" class="top-left-logo" id="logoEkkles">
 
-<a href="https://wa.me/6281314798161" target="_blank">
-    <img src="walogo.png" alt="WhatsApp" class="top-right-wa">
-</a>
+<img src="walogo.png" alt="WhatsApp" class="top-right-wa" id="waLogo">
 
 <div class="container">
 
@@ -289,6 +295,24 @@ logo.addEventListener('click', () => {
     // 3. Setelah animasi selesai (total 300ms), halaman berpindah ke tautan baru
     setTimeout(() => {
         window.location.href = "https://aban-007.github.io/hairdo-by-ekkles/";
+    }, 300);
+});
+
+// Fitur Animasi WA Logo & Pengalihan ke Tautan Pesan WhatsApp khusus
+const waLogo = document.getElementById('waLogo');
+waLogo.addEventListener('click', () => {
+    // 1. Logo WA turun ke bawah (5mm)
+    waLogo.classList.add('pressed');
+
+    // 2. Setelah 150ms, logo naik kembali ke posisi semula
+    setTimeout(() => {
+        waLogo.classList.remove('pressed');
+    }, 150);
+
+    // 3. Setelah animasi selesai (total 300ms), halaman berpindah ke tautan WhatsApp dengan template teks khusus
+    setTimeout(() => {
+        const text = encodeURIComponent("Form sudah saya isi dan kirim saya tunggu kabarnya selanjutnya yaa Kak");
+        window.open(`https://wa.me/6281314798161?text=${text}`, '_blank');
     }, 300);
 });
 
