@@ -136,7 +136,57 @@ button:hover{
     text-align:center;
     padding:30px;
     color:#888;
+    font-size: 20px; /* Updated to 125% (16px * 1.25 = 20px) */
 }
+
+/* CTA Button and Promo Text under form-box */
+.cta-container {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.cta-button {
+    display: inline-block;
+    width: max-content;
+    max-width: 100%;
+    padding: 12px 30px;
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--light);
+    font-size: 22.5px; /* Updated to 125% (18px * 1.25 = 22.5px) */
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.cta-button:hover,
+.cta-button:active {
+    background: var(--gold);
+    color: var(--dark);
+}
+
+.promo-text {
+    margin-top: 25px;
+    font-size: 17.5px; /* Updated to 125% (14px * 1.25 = 17.5px) */
+    line-height: 1.6;
+    color: var(--light);
+}
+
+.promo-text h3 {
+    color: var(--gold);
+    margin-bottom: 15px;
+    font-size: 20px; /* Updated to 125% (16px * 1.25 = 20px) */
+    letter-spacing: 1px;
+}
+
+.promo-text p {
+    margin: 5px 0;
+}
+
 </style>
 </head>
 
@@ -204,10 +254,23 @@ button:hover{
 
     </div>
 
+    <!-- Added CTA Button & Info under form-box -->
+    <div class="cta-container">
+        <a href="https://aban-007.github.io/hairdo-by-ekkles/" target="_blank" class="cta-button">FOLLOW OUR INSTAGRAM</a>
+        
+        <div class="promo-text">
+            <h3>HAIRDO GADING SERPONG | BSD | ALSUT | KARAWACI</h3>
+            <p>Certified hairstylist & hijabstylist</p>
+            <p>✨Suka share tutorial dan cerita menarik ttg rambut</p>
+            <p>🙋🏻‍♀️ OPEN SELF-PRO HAIRDO CLASS</p>
+            <p>PL/ availability👇🏻(Admin)</p>
+        </div>
+    </div>
+
 </div>
 
 <div class="footer">
-    © 2026 Hair Do by Ekkles
+    © 2024 HAIR DO by Ekkles. All Rights Reserved.
 </div>
 
 <script>
