@@ -64,21 +64,24 @@ h1{
     background:#1a1a1a;
 }
 
-label{
+/* Updated label font size inside form-box to 150% */
+.form-box label{
     display:block;
     margin-top:15px;
     margin-bottom:5px;
     color:var(--gold);
+    font-size: 150%;
 }
 
-input,
-textarea,
-select{
+/* Updated inputs font size inside form-box to 150% */
+.form-box input,
+.form-box textarea,
+.form-box select{
     width:100%;
     padding:12px;
     border-radius:10px;
     border:none;
-    font-size:16px;
+    font-size: 24px; /* Originally 16px. 16px * 1.5 = 24px */
 }
 
 textarea{
