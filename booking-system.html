@@ -216,6 +216,10 @@ button:hover{
 
         <form id="bookingForm">
 
+            
+            <label>Nama MUA</label>
+            <input type="text" id="nama_mua" required>
+
             <label>Nama Client</label>
             <input type="text" id="nama" required>
 
@@ -318,7 +322,7 @@ waLogo.addEventListener('click', () => {
 
 
 const scriptURL =
-"https://script.google.com/macros/s/AKfycbwfLj9jJ8swzhzBsV_uTKS0OiaDLDYET9eEsc5kKkvZLLJ5Yo93LPW5-MuPj6govBXU/exec";
+"https://script.google.com/macros/s/AKfycbzMcdl8yFrLvPFDPy86lskmBRzzb-B57wGqtruDKBnPc3LMaqnQsfXUtTTyv-ONA7Jc/exec";
 
 const form = document.getElementById('bookingForm');
 
@@ -327,6 +331,8 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const data = {
+        nama_mua: document.getElementById('nama_mua').value,
+        nama: document.getElementById('nama').value,
         nama: document.getElementById('nama').value,
         wa: document.getElementById('wa').value,
         tanggal: document.getElementById('tanggal').value,
