@@ -235,28 +235,38 @@ button:hover{
             <select id="retouch">
                 <option>No Retouch</option>
                 <option>Retouch</option>
+					 <option>Minta di hubungi Admin</option>
             </select>
 
             <label>Di Atas 45 Tahun</label>
             <select id="usia_45">
-                <option>Tidak</option>
                 <option>Ya</option>
+                <option>Tidak</option> 
+					 <option>Ya / Tidak</option>
             </select>
 
             <label>Request Model Rambut</label>
-            <textarea id="request_model"></textarea>
-
-            <label>Status DP</label>
-            <select id="dp">
-                <option>Belum DP</option>
-                <option>Sudah DP</option>
+            <select id="request_model">		
+				    <option>Model terkini</option>
+                <option>Sesuai wajah</option>
+					 <option>Dibicarakan kemudian</option>
+			   </select>				
+				
+				<label>Pembayaran</label>
+            <select id="pembayaran">
+                <option>DP + Pelunasan</option>
+                <option>DP H-3 Lunas</option>
             </select>
 
-            <label>Catatan Tambahan</label>
-            <textarea id="catatan"></textarea>
+				 <label>Catatan Tambahan</label>
+            <select id="catatan">
+                <option>Disini sering macet</option>
+                <option>Disini gang kecil</option>
+					 <option>Menunggu hasil terbaik</option>
+				</select>	 
 
-            <button type="submit">KIRIM BOOKING</button>
-        </form>
+           <button type="submit">KIRIM BOOKING</button>
+           </form>
 
         <div class="success" id="successMessage">
             Booking berhasil dikirim ✨
@@ -299,7 +309,8 @@ waLogo.addEventListener('click', () => {
 
 const scriptURL=
 
-"https://script.google.com/macros/s/AKfycbyJfJcjKLQGhau5VMb7gP7BXsGQbf2NTwlLCLiiZ86XjBbeFNlrWhDb5MWlYj5A9sgW/exec";
+"https://script.google.com/macros/s/AKfycbwi_LQbCNEl1fEVffWQ8_MJQn8tAiipG1Kcm0yaXpA6rTlPBwN9nwCPjynNiAkEeG2c/exec";
+
 
 const form = document.getElementById('bookingForm');
 
@@ -317,7 +328,7 @@ form.addEventListener('submit', async (e) => {
         retouch: document.getElementById('retouch').value,
         usia_45: document.getElementById('usia_45').value,
         request_model: document.getElementById('request_model').value,
-        dp: document.getElementById('dp').value,
+        pembayaran: document.getElementById('pembayaran').value,
         status: 'Pending',
         catatan: document.getElementById('catatan').value
     };
