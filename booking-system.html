@@ -12,7 +12,9 @@
     --light:#ffffff;
 }
 
-*{ box-sizing:border-box; }
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -34,7 +36,9 @@ body{
     transition: top 0.15s ease-in-out; 
 }
 
-.top-left-logo.pressed { top: 25mm; }
+.top-left-logo.pressed {
+    top: 25mm;
+}
 
 .top-right-wa {
     position: absolute;
@@ -47,7 +51,9 @@ body{
     transition: top 0.15s ease-in-out;
 }
 
-.top-right-wa.pressed { top: 25mm; }
+.top-right-wa.pressed {
+    top: 25mm;
+}
 
 .container{
     width:95%;
@@ -96,7 +102,9 @@ h1{
     font-size: 24px;
 }
 
-textarea{ min-height:100px; }
+textarea{
+    min-height:100px;
+}
 
 button{
     width:100%;
@@ -110,7 +118,9 @@ button{
     cursor:pointer;
 }
 
-button:hover{ opacity:0.9; }
+button:hover{
+    opacity:0.9;
+}
 
 .success{
     display:none;
@@ -129,7 +139,11 @@ button:hover{ opacity:0.9; }
     font-size: 20px;
 }
 
-.cta-container { text-align: center; margin-top: 30px; padding: 10px; }
+.cta-container {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+}
 
 .cta-button {
     display: inline-block;
@@ -148,11 +162,29 @@ button:hover{ opacity:0.9; }
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-.cta-button:hover, .cta-button:active { background: var(--gold); color: var(--dark); }
+.cta-button:hover,
+.cta-button:active {
+    background: var(--gold);
+    color: var(--dark);
+}
 
-.promo-text { margin-top: 25px; font-size: 17.5px; line-height: 1.6; color: var(--light); }
-.promo-text h3 { color: var(--gold); margin-bottom: 15px; font-size: 20px; letter-spacing: 1px; }
-.promo-text p { margin: 5px 0; }
+.promo-text {
+    margin-top: 25px;
+    font-size: 17.5px;
+    line-height: 1.6;
+    color: var(--light);
+}
+
+.promo-text h3 {
+    color: var(--gold);
+    margin-bottom: 15px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.promo-text p {
+    margin: 5px 0;
+}
 </style>
 </head>
 
@@ -167,7 +199,8 @@ button:hover{ opacity:0.9; }
 
     <div class="form-box">
         <form id="bookingForm">
-            <label>Nama MUA</label>
+
+				<label>Nama MUA</label>
             <input type="text" id="namaMua" required>
 
             <label>Nama Client</label>
@@ -194,6 +227,24 @@ button:hover{ opacity:0.9; }
                 <option>Prewedding</option>
                 <option>Lainnya</option>
             </select>
+
+            <label>Total Pax</label>
+            <input type="number" id="total_pax" required>
+
+            <label>Retouch / No Retouch</label>
+            <select id="retouch">
+                <option>No Retouch</option>
+                <option>Retouch</option>
+            </select>
+
+            <label>Di Atas 45 Tahun</label>
+            <select id="usia_45">
+                <option>Tidak</option>
+                <option>Ya</option>
+            </select>
+
+            <label>Request Model Rambut</label>
+            <textarea id="request_model"></textarea>
 
             <label>Status DP</label>
             <select id="dp">
@@ -224,7 +275,9 @@ button:hover{ opacity:0.9; }
     </div>
 </div>
 
-<div class="footer">© 2024 HAIR DO by Ekkles. All Rights Reserved.</div>
+<div class="footer">
+    © 2024 HAIR DO by Ekkles. All Rights Reserved.
+</div>
 
 <script>
 const logo = document.getElementById('logoEkkles');
@@ -244,13 +297,12 @@ waLogo.addEventListener('click', () => {
     }, 300);
 });
 
-// GANTI URL DI BAWAH INI DENGAN SCRIPT URL GOOGLE SHEETS BARU ANDA
-const scriptURL = 
-"https://script.google.com/macros/s/AKfycbyBnVcNsVvDicPs4p7pBmi9SBzscTxpOxx_Z789-1dMDq7oqmVBwUiHO7qtqrY-H4M/exec";
+const scriptURL=
 
-"https://script.google.com/macros/s/AKfycbwfLj9jJ8swzhzBsV_uTKS0OiaDLDYET9eEsc5kKkvZLLJ5Yo93LPW5-MuPj6govBXU/exec";
+"https://script.google.com/macros/s/AKfycbyJfJcjKLQGhau5VMb7gP7BXsGQbf2NTwlLCLiiZ86XjBbeFNlrWhDb5MWlYj5A9sgW/exec";
 
 const form = document.getElementById('bookingForm');
+
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = {
@@ -261,6 +313,10 @@ form.addEventListener('submit', async (e) => {
         jam: document.getElementById('jam').value,
         lokasi: document.getElementById('lokasi').value,
         acara: document.getElementById('acara').value,
+        total_pax: document.getElementById('total_pax').value,
+        retouch: document.getElementById('retouch').value,
+        usia_45: document.getElementById('usia_45').value,
+        request_model: document.getElementById('request_model').value,
         dp: document.getElementById('dp').value,
         status: 'Pending',
         catatan: document.getElementById('catatan').value
@@ -282,6 +338,5 @@ form.addEventListener('submit', async (e) => {
     }
 });
 </script>
-
 </body>
 </html>
