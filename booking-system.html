@@ -122,6 +122,11 @@ button:hover{
     opacity:0.9;
 }
 
+button:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
 .success{
     display:none;
     margin-top:20px;
@@ -265,8 +270,8 @@ button:hover{
 					 <option>Tunggu hasil terbaik</option>
 				</select>	 
 
-           <button type="submit">KIRIM BOOKING</button>
-        </form>
+           <button type="submit" id="submitBtn">KIRIM BOOKING</button>
+           </form>
 
         <div class="success" id="successMessage">
             Booking berhasil dikirim ✨
@@ -308,15 +313,12 @@ waLogo.addEventListener('click', () => {
 });
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbwi_LQbCNEl1fEVffWQ8_MJQn8tAiipG1Kcm0yaXpA6rTlPBwN9nwCPjynNiAkEeG2c/exec";
-
 const form = document.getElementById('bookingForm');
-const successMessage = document.getElementById('successMessage');
+const submitBtn = document.getElementById('submitBtn');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    // Sembunyikan pesan sukses jika muncul kembali
-    successMessage.style.display = 'none';
+    submitBtn.disabled = true;
     
     const data = {
         namaMua: document.getElementById('namaMua').value,
@@ -342,14 +344,24 @@ form.addEventListener('submit', async (e) => {
         });
         const result = await response.json();
         if(result.result === 'success'){
-            // Hapus isi form
-            form.reset();
             // Tampilkan pesan sukses
-            successMessage.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'block';
+            form.reset();
+            
+            // Tunggu 5 detik lalu redirect
+            setTimeout(() => {
+                window.location.href = "https://aban-007.github.io/hairdo-by-ekkles/";
+            }, 5000);
+            
+            // Disable tombol selama 5 menit
+            setTimeout(() => {
+                submitBtn.disabled = false;
+            }, 300000); // 5 menit dalam milidetik
         }
     } catch(error){
         alert('Terjadi kesalahan.');
         console.log(error);
+        submitBtn.disabled = false; // Aktifkan kembali jika error
     }
 });
 </script>
