@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hairdo Form - Dropdown & Expandable Add-on</title>
+  <style>
+    * { box-sizing: border-box; }
+    
+    body { 
+      margin: 0; 
+      font-family: 'Segoe UI', Arial, sans-serif; 
+      background: #060b0e; 
+      color: #ffffff; 
+      font-size: 150%; /* Enlarged text size to 150% */
+    }
+    
+    .logo-container {
+      max-width: 1260px;
+      margin: 10px auto 0;
+      padding: 0 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #topLogo {
+      width: 90px; /* 60px * 1.5 = 90px */
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.12s ease-in-out;
+    }
+    
+    #waLogo {
+      width: 75px; /* 50px * 1.5 = 75px */
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.12s ease-in-out;
+    }
+    
+    .wrap { 
+      max-width: 1260px; 
+      margin: 5mm auto 2px; 
+      padding: 0 2px; 
+    }
+    
+    .card { 
+      background: #051412; 
+      border-radius: 24px; 
+      padding: 28px; 
+      box-shadow: 0 14px 40px rgba(0,0,0,.8), 0 0 0 1px rgba(0, 210, 255, 0.15); 
+      border: 1px solid #c8a96b; 
+    }
+    
+    h1 { margin: 0 0 8px; font-size: 1.75em; color: #ffffff; }
+    
+    h2 { 
+      margin: 30px 0 14px; 
+      font-size: 1.125em; 
+      color: #c8a96b;
+      border-bottom: 1px solid rgba(200, 169, 107, 0.3);
+      padding-bottom: 6px;
+    }
+    
+    p { color: #00d2ff; opacity: 0.85; line-height: 1.5; }
+    
+    label { display: block; margin: 13px 0 6px; font-weight: 700; font-size: 0.875em; color: #ffffff; }
+    
+    input, textarea, select {
+      width: 100%; border: 1px solid #c8a96b; border-radius: 14px;
+      padding: 12px 13px; font-size: 0.9375em; background: #030e0c; color: #ffffff;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      border-color: #00ffcc;
+      box-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+    }
+
+    #serviceSelect:focus {
+      background-color: #FF69B4;
+      color: #FFFFFF;
+      border-color: #FF69B4;
+    }
+    
+    textarea { min-height: 86px; resize: vertical; }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    
+    .service-preview {
+      margin-top: 12px; padding: 14px; background: #030e0c;
+      border: 1px solid #c8a96b; border-radius: 16px;
+    }
+    
+    details {
+      border: 1px solid #c8a96b; border-radius: 18px; margin-bottom: 12px;
+      background: #051412; overflow: hidden;
+    }
+    
+    summary {
+      cursor: pointer; list-style: none; padding: 16px; font-weight: 800;
+      display: flex; justify-content: space-between; gap: 14px; align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 1.375em; color: #c8a96b; }
+    details[open] summary::after { content: "–"; }
+    
+    .addon-content { padding: 0 16px 16px; border-top: 1px solid rgba(200, 169, 107, 0.3); }
+    .addon-row { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; }
+    .addon-row input[type="checkbox"] { width: 1.2em; height: 1.2em; margin-top: 3px; accent-color: #00ffcc; }
+    .addon-name { font-weight: 700; color: #ffffff; }
+    .addon-desc { color: #00d2ff; font-size: 0.8125em; line-height: 1.45; margin-top: 3px; }
+    .addon-price { margin-left: auto; white-space: nowrap; font-weight: 700; color: #c8a96b; }
+    
+    .nested {
+      margin: 12px 0 0 28px; padding: 12px; background: #030e0c;
+      border-radius: 14px; border: 1px dashed #c8a96b;
+    }
+    
+    .hidden { display: none !important; }
+    
+    .pill {
+      display: inline-block; font-size: 0.75em; padding: 4px 8px;
+      border-radius: 999px; background: #082521; color: #00ffcc;
+      margin-left: 6px; font-weight: 700; border: 1px solid rgba(200, 169, 107, 0.3);
+    }
+    
+    .included { background: #030e0c; border-radius: 18px; padding: 14px 18px; border: 1px solid #c8a96b; }
+    .included ul { margin: 8px 0 0 18px; padding: 0; color: #ffffff; }
+    
+    .note {
+      background: #04201b; border: 1px solid #c8a96b;
+      padding: 12px 14px; border-radius: 14px; font-size: 0.875em;
+      color: #00ffcc; margin-top: 10px;
+    }
+    
+    .summary {
+      margin-top: 26px; background: #060b0e; color: #ffffff; border: 1px solid #c8a96b;
+      border-radius: 22px; padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 1px rgba(0, 210, 255, 0.1);
+    }
+    .summary h2 { margin-top: 0; color: #ffffff; }
+    .summary-row { display: flex; justify-content: space-between; gap: 14px; margin: 9px 0; color: #ffffff; }
+    .summary-row.muted { color: #00d2ff; opacity: 0.6; font-size: 0.875em; }
+    .total { border-top: 1px solid #c8a96b; padding-top: 14px; margin-top: 14px; font-size: 1.25em; font-weight: 800; color: #00ffcc; }
+    
+    .btn {
+      width: 100%; border: 0; border-radius: 16px; padding: 15px;
+      margin-top: 18px; background: linear-gradient(135deg, #00ffcc, #00d2ff); color: #060b0e; font-size: 1em;
+      cursor: pointer; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+    }
+    .btn:hover { opacity: 0.95; }
+    .btn:active { transform: scale(0.99); }
+    
+    .success {
+      display: none; background: #04201b; border: 2px solid #00ffcc;
+      color: #00ffcc; border-radius: 16px; padding: 20px;
+      text-align: center; font-weight: 700; font-size: 1em; margin-top: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+
+    /* Instagram CTA Button Styles */
+    .cta-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px auto 40px;
+      padding: 0 18px;
+      max-width: 860px;
+      text-align: center;
+    }
+    
+    .btn-gold {
+      display: inline-block;
+      text-align: center;
+      text-decoration: none;
+      border: 2px solid #c8a96b;
+      border-radius: 16px;
+      padding: 12px 30px;
+      background: transparent;
+      color: #c8a96b;
+      font-size: 0.9em;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 24px;
+    }
+    .btn-gold:hover {
+      background: #c8a96b;
+      color: #051412;
+      box-shadow: 0 0 15px rgba(200, 169, 107, 0.4);
+    }
+    .btn-gold:active {
+      transform: scale(0.98);
+    }
+
+    /* Gold Info Text Styling */
+    .gold-info-text {
+      color: #c8a96b;
+      font-size: 0.85em;
+      line-height: 1.6;
+      font-weight: 600;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+    
+    .gold-info-text p {
+      margin: 6px 0;
+      color: #c8a96b;
+      opacity: 1;
+    }
+
+    .copyright-text {
+      color: #c8a96b;
+      font-size: 0.7em;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- POPUP STRUK TAGIHAN STYLES --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(6, 11, 14, 0.95);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10000;
+      padding: 15px;
+      transition: opacity 0.3s ease;
+    }
+    .receipt-card {
+      background: #051412;
+      border: 2px solid #c8a96b;
+      border-radius: 24px;
+      padding: 26px;
+      width: 100%;
+      max-width: 550px;
+      box-shadow: 0 14px 40px rgba(0, 255, 204, 0.2);
+    }
+    .receipt-header {
+      text-align: center;
+      border-bottom: 1px dashed rgba(200, 169, 107, 0.4);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+    .receipt-header h3 { margin: 0; color: #c8a96b; font-size: 1.3em; letter-spacing: 0.5px; }
+    .receipt-header p { margin: 4px 0 0; color: #ffffff; font-size: 0.85em; opacity: 0.8; }
+    .receipt-body { margin-bottom: 18px; }
+    .receipt-row { display: flex; justify-content: space-between; margin: 9px 0; gap: 12px; font-size: 0.85em; }
+    .receipt-row span:first-child { color: #00d2ff; opacity: 0.9; }
+    .receipt-row span:last-child { color: #ffffff; text-align: right; font-weight: 600; }
+    .receipt-divider { border: 0; border-top: 1px dashed rgba(200, 169, 107, 0.4); margin: 14px 0; }
+    .receipt-row.total-row span:last-child { color: #00ffcc; font-weight: 800; font-size: 1.1em; }
+    .receipt-row.dp-row span:last-child { color: #ff69b4; font-weight: 800; font-size: 1.1em; }
+    .receipt-footer {
+      text-align: center; color: #c8a96b; font-size: 0.75em; line-height: 1.4;
+      margin: 14px 0; background: rgba(200, 169, 107, 0.08); padding: 10px; border-radius: 12px;
+    }
+    .btn-close-modal {
+      width: 100%; border: 0; border-radius: 16px; padding: 14px;
+      background: linear-gradient(135deg, #c8a96b, #b39255); color: #060b0e; font-size: 0.9em;
+      cursor: pointer; font-weight: 800; text-transform: uppercase; transition: opacity 0.2s;
+    }
+    .btn-close-modal:hover { opacity: 0.9; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="logo-container">
+  <img src="logo.png" id="topLogo" alt="Logo" />
+  <img src="walogo.png" id="waLogo" alt="WhatsApp Support" />
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <h1>Hairdo Booking By.Ekkles</h1>
+
+    <form id="bookingForm">
+      <h2>1. Pilih Service</h2>
+      <label>Service yang dibutuhkan</label>
+      <select id="serviceSelect" required>
+        <option value="">-- Pilih service --</option>
+      </select>
+      <div id="servicePreview" class="service-preview hidden"></div>
+
+      <h2>2. Add-on Opsional</h2>
+      <p id="addonIntro">Pilih service terlebih dahulu. Add-on akan muncul dalam bentuk expandable dropdown.</p>
+      <div id="addonPanel"></div>
+
+      <h2>3. Included Benefit</h2>
+      <div class="included" id="includedBox">
+        <p>Pilih service terlebih dahulu untuk melihat benefit yang termasuk.</p>
+      </div>
+
+      <h2>4. Detail Acara</h2>
+      <div class="two-col">
+        <div>
+          <label>Nama Client</label>
+          <input id="clientName" name="name" autocomplete="name" required placeholder="Contoh: Clara" />
+        </div>
+        <div>
+          <label>Nomor WhatsApp</label>
+          <input id="whatsapp" type="tel" name="tel" autocomplete="tel" required placeholder="Contoh: 08123456789" />
+        </div>
+        <div>
+          <label>Tanggal Acara</label>
+          <input id="eventDate" type="date" required />
+        </div>
+        <div>
+          <label>Jam Ready</label>
+          <input id="readyTime" type="time" step="60" required />
+        </div>
+      </div>
+
+      <label>Lokasi / Google Maps Link</label>
+      <textarea id="location" placeholder="Isi alamat lengkap atau paste link Google Maps"></textarea>
+
+      <div class="two-col">
+        <div>
+          <label>Age Over 45</label>
+          <select id="age">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div>
+          <label>Area Transport</label>
+          <select id="transportArea">
+            <option value="included">Area free transport / radius termasuk</option>
+            <option value="confirm">Di luar area, perlu konfirmasi biaya</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="autoNotes"></div>
+
+      <h2>5. Catatan / Request Model</h2>
+      <select id="notes">
+        <option value="According to Theme">According to Theme</option>
+        <option value="According to Season">According to Season</option>
+        <option value="According to Face">According to Face</option>
+        <option value="Latest Model">Latest Model</option>
+      </select>
+
+      <div class="summary">
+        <h2>Booking Summary</h2>
+        <div id="summaryItems"></div>
+        <div class="summary-row total">
+          <span>Total Estimasi</span>
+          <span id="totalText">Rp0</span>
+        </div>
+      </div>
+
+      <button class="btn" type="submit">Send Booking</button>
+    </form>
+
+    <div class="success" id="successMessage">
+      Booking successfully sent ✨
+    </div>
+  </div>
+</div>
+
+<div class="cta-container">
+  <a href="https://www.instagram.com/by.ekkles/" target="_blank" class="btn-gold">FOLLOW OUR INSTAGRAM</a>
+  
+  <div class="gold-info-text">
+    <p><strong>HAIRDO GADING SERPONG | BSD | ALSUT | KARAWACI</strong></p>
+    <p>Certified hairstylist & hijabstylist</p>
+    <p>✨Loves sharing tutorials and interesting stories about hair</p>
+    <p>🙋🏻‍♀️ OPEN SELF-PRO HAIRDO CLASS</p>
+    <p>PL/ availability👇🏻(Admin)</p>
+  </div>
+
+  <div class="copyright-text">
+    © 2024 HAIR DO by.Ekkles All Rights Reserved.
+  </div>
+</div>
+
+<div id="receiptModal" class="modal-overlay hidden">
+  <div class="receipt-card">
+    <div class="receipt-header">
+      <h3>STRUK ESTIMASI BOOKING</h3>
+      <p>Hairdo By.Ekkles</p>
+    </div>
+    <div class="receipt-body">
+      <div class="receipt-row"><span>Nama Client:</span><span id="rClientName"></span></div>
+      <div class="receipt-row"><span>WhatsApp:</span><span id="rWhatsapp"></span></div>
+      <div class="receipt-row"><span>Tanggal Acara:</span><span id="rEventDate"></span></div>
+      <div class="receipt-row"><span>Jam Ready:</span><span id="rReadyTime"></span></div>
+      <hr class="receipt-divider">
+      <div class="receipt-row"><span>Service Utama:</span><span id="rService"></span></div>
+      <div class="receipt-row"><span>Add-on Pilihan:</span><span id="rAddons"></span></div>
+      <div class="receipt-row"><span>Mature Fee:</span><span id="rMatureFee"></span></div>
+      <div class="receipt-row"><span>Transport:</span><span id="rTransport"></span></div>
+      <hr class="receipt-divider">
+      <div class="receipt-row total-row"><span>Total Estimasi:</span><span id="rTotal"></span></div>
+      <div class="receipt-row dp-row"><span>Minimal DP (50%):</span><span id="rDp"></span></div>
+    </div>
+    <div class="receipt-footer">
+      ⚠️ Silakan screenshot simpan bukti rincian booking Anda!
+    </div>
+    <button type="button" class="btn-close-modal" id="closeReceiptBtn">Tutup Struk</button>
+  </div>
+</div>
+
+<script>
+const services = {
+  regular: {
+    label: "Regular Occasion",
+    desc: "Graduation / Bridesmaid / Guest Party",
+    price: 300000,
+    included: ["Free aksesoris rambut sesuai ketersediaan", "Tidak termasuk hairclip"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Touch-up During Event", subtitle: "Untuk client yang ingin rambut dicek / dirapikan lagi saat acara.", addons: [
+        { id: "retouch_regular", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan yang hanya muncul jika diperlukan.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  },
+  special450: {
+    label: "Sis Wedding / Pageant Finalist",
+    desc: "Special Occasion",
+    price: 450000,
+    included: ["Free rent hairclip jika dibutuhkan", "Free aksesoris rambut sesuai ketersediaan"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Touch-up During Event", subtitle: "Untuk acara panjang atau butuh retouch setelah sesi utama.", addons: [
+        { id: "retouch_special", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  },
+  sangjit: {
+    label: "Sangjit / Engagement / Sweet17",
+    desc: "Special Occasion",
+    price: 500000,
+    included: ["Free rent hairclip jika dibutuhkan", "Free aksesoris rambut sesuai ketersediaan"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Touch-up During Event", subtitle: "Cocok jika ada pergantian sesi / foto / acara cukup panjang.", addons: [
+        { id: "retouch_special", label: "Add retouch", price: 200000, desc: "Hairdo touch-up saat acara." }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  },
+  portfolio: {
+    label: "Portfolio",
+    desc: "Per look",
+    price: 250000,
+    included: ["Harga per look"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan look.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  },
+  photoshoot: {
+    label: "Photoshoot",
+    desc: "Self / Family / Prewedding",
+    price: 350000,
+    included: ["Free transport Gading Serpong, Alsut, Karawaci, BSD", "Free aksesoris rambut sesuai ketersediaan"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Standby Photoshoot", subtitle: "Untuk photoshoot yang butuh ganti look atau hairdo dicek selama sesi.", addons: [
+        { id: "standby", label: "Add standby", price: 100000, desc: "Jika standby, jumlah look bebas.", perHour: true }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  },
+  bride: {
+    label: "Bride",
+    desc: "D-Day bride hairdo",
+    price: 750000,
+    included: [
+      "Free synthetic hairclip jika dibutuhkan and menjadi hak milik",
+      "Konfirmasi warna hairclip max H-3 minggu sebelum acara",
+      "Free transport radius 20 km",
+      "Free touch-up kit"
+    ],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Retouch / Touch-up", subtitle: "Untuk bride yang ingin ada touch-up tambahan saat acara.", addons: [
+        { id: "retouch_bride_1time", label: "Retouch 1 time", price: 450000, desc: "For dinner events" },
+        { id: "retouch_bride_hourly", label: "Retouch Standby until the event is finished", price: 300000, desc: "Price per hour", autoCalcTime: true }
+      ]},
+      { title: "Trial Session", subtitle: "Trial hanya weekdays. Jika weekend ada tambahan biaya.", addons: [
+        { id: "trial_weekday", label: "Add trial weekdays", price: 400000, desc: "Trial hairdo di hari kerja." },
+        { id: "trial_weekend_fee", label: "Trial di weekend", price: 300000, desc: "Tambahan biaya jika trial dilakukan saat weekend.", requires: "trial_weekday" }
+      ]}
+    ]
+  },
+  mom_engagement: {
+    label: "Mom Engagement / Bday / Anniversary",
+    desc: "Mom hairdo",
+    price: 450000,
+    included: ["Free aksesoris rambut sesuai ketersediaan"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Touch-up During Event", subtitle: "Untuk mom yang membutuhkan touch-up saat acara.", addons: [
+        { id: "retouch_mom", label: "Add retouch", price: 250000, desc: "Hairdo touch-up saat acara." }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  },
+  mom_bride: {
+    label: "Mom Bride / Groom D-Day",
+    desc: "Mom wedding day hairdo",
+    price: 500000,
+    included: ["Free aksesoris rambut sesuai ketersediaan"],
+    addonGroups: [
+      { title: "Hairclip Rental", subtitle: "Pengembalian hairclip maksimal H+3 setelah acara, dana deposit akan dikembalikan penuh.", addons: [
+        { id: "synthetic_hair_rental", label: "Synthetic Hair Rental", price: 200000, rentalPrice: 100000, depositPrice: 100000, desc: "Price per Pax Rp. 100,000 + Deposit Rp. 100,000", isHairclip: true },
+        { id: "original_hair_rental", label: "Original Hair Rental", price: 2000000, rentalPrice: 500000, depositPrice: 1500000, desc: "Price per Pax Rp. 500,000 + Deposit Rp. 1,500,000", isHairclip: true }
+      ]},
+      { title: "Touch-up During Event", subtitle: "Untuk mom yang membutuhkan touch-up saat acara.", addons: [
+        { id: "retouch_mom", label: "Add retouch", price: 250000, desc: "Hairdo touch-up saat acara." }
+      ]},
+      { title: "Special Need", subtitle: "Tambahan opsional sesuai kebutuhan client.", addons: [
+        { id: "facelift", label: "Add facelift tape", price: 100000, desc: "Opsional untuk hasil wajah lebih lifting." }
+      ]}
+    ]
+  }
+};
+
+let selectedServiceId = "";
+
+const rupiah = (n) => new Intl.NumberFormat("id-ID", {
+  style: "currency", currency: "IDR", maximumFractionDigits: 0
+}).format(n);
+
+function initServiceDropdown() {
+  const select = document.getElementById("serviceSelect");
+
+  Object.entries(services).forEach(([id, service]) => {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.textContent = `${service.label} - ${service.desc} (${rupiah(service.price)})`;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", () => {
+    selectedServiceId = select.value;
+    clearAddons();
+    renderServicePreview();
+    renderAddons();
+    renderIncluded();
+    updateSummary();
+  });
+}
+
+function renderServicePreview() {
+  const preview = document.getElementById("servicePreview");
+  if (!selectedServiceId) {
+    preview.classList.add("hidden");
+    return;
+  }
+  const service = services[selectedServiceId];
+  preview.classList.remove("hidden");
+  preview.innerHTML = `
+    <strong>${service.label}</strong><br>
+    <span style="color:#00d2ff; opacity:0.85;">${service.desc}</span><br>
+    <strong style="color:#00ffcc;">${rupiah(service.price)}</strong>
+  `;
+}
+
+function clearAddons() {
+  document.getElementById("addonPanel").innerHTML = "";
+}
+
+function renderAddons() {
+  const panel = document.getElementById("addonPanel");
+  const intro = document.getElementById("addonIntro");
+  panel.innerHTML = "";
+
+  if (!selectedServiceId) {
+    intro.textContent = "Pilih service terlebih dahulu.";
+    return;
+  }
+
+  intro.textContent = "Buka kategori add-on yang dibutuhkan saja.";
+  const service = services[selectedServiceId];
+
+  service.addonGroups.forEach((group, index) => {
+    const details = document.createElement("details");
+    if (index === 0) details.open = true;
+
+    details.innerHTML = `
+      <summary><span>${group.title}<span class="pill">Optional</span></span></summary>
+      <div class="addon-content">
+        <p class="addon-desc">${group.subtitle}</p>
+        <div class="addon-list"></div>
+      </div>
+    `;
+
+    const list = details.querySelector(".addon-list");
+    group.addons.forEach(addon => {
+      const row = document.createElement("div");
+      row.className = "addon-row";
+      row.dataset.requires = addon.requires || "";
+
+      row.innerHTML = `
+        <input type="checkbox" class="addon-check" id="${addon.id}" data-id="${addon.id}"
+          data-label="${addon.label}" data-price="${addon.price}"
+          data-rental="${addon.rentalPrice || 0}" data-deposit="${addon.depositPrice || 0}"
+          data-ishairclip="${addon.isHairclip ? "yes" : "no"}"
+          data-perhour="${addon.perHour ? "yes" : "no"}"
+          data-autocalc="${addon.autoCalcTime ? "yes" : "no"}" />
+        <div style="flex:1;">
+          <div class="addon-name">${addon.label}</div>
+          <div class="addon-desc">${addon.desc}</div>
+          
+          ${addon.perHour ? `
+            <div class="nested hidden" data-hour-box="${addon.id}">
+              <label>Jumlah jam standby</label>
+              <input type="number" class="hour-input" data-for="${addon.id}" value="1" min="1" />
+            </div>
+          ` : ""}
+
+          ${addon.autoCalcTime ? `
+            <div class="nested hidden" data-time-box="${addon.id}">
+              <div class="two-col" style="margin-top:10px;">
+                <div><label>Event Start Time</label><input type="time" class="start-time" data-for="${addon.id}"></div>
+                <div><label>Event End Time</label><input type="time" class="end-time" data-for="${addon.id}"></div>
+              </div>
+              <div class="note" style="margin-top:10px; font-size:12px;" id="calcNote-${addon.id}">Fill times to calculate hours.</div>
+            </div>
+          ` : ""}
+        </div>
+        <div class="addon-price">${(addon.perHour || addon.autoCalcTime) ? rupiah(addon.price) + " / jam" : "+" + rupiah(addon.price)}</div>
+      `;
+      list.appendChild(row);
+    });
+    panel.appendChild(details);
+  });
+
+  bindAddonEvents();
+  applyDependencyVisibility();
+}
+
+function bindAddonEvents() {
+  document.querySelectorAll(".addon-check").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const hBox = document.querySelector(`[data-hour-box="${cb.dataset.id}"]`);
+      const tBox = document.querySelector(`[data-time-box="${cb.dataset.id}"]`);
+      if (hBox) hBox.classList.toggle("hidden", !cb.checked);
+      if (tBox) tBox.classList.toggle("hidden", !cb.checked);
+      applyDependencyVisibility();
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll(".hour-input, .start-time, .end-time").forEach(el => {
+    el.addEventListener("input", updateSummary);
+  });
+}
+
+function applyDependencyVisibility() {
+  document.querySelectorAll("[data-requires]").forEach(row => {
+    const reqId = row.dataset.requires;
+    if (!reqId) return;
+    const reqInp = document.getElementById(reqId);
+    const show = reqInp && reqInp.checked;
+    row.classList.toggle("hidden", !show);
+    if (!show) {
+      const cb = row.querySelector(".addon-check");
+      if (cb) cb.checked = false;
+    }
+  });
+}
+
+function renderIncluded() {
+  const box = document.getElementById("includedBox");
+  if (!selectedServiceId) {
+    box.innerHTML = "<p>Pilih service terlebih dahulu.</p>";
+    return;
+  }
+  const items = services[selectedServiceId].included.map(item => `<li>${item}</li>`).join("");
+  box.innerHTML = `<strong>Included:</strong><ul>${items}</ul>`;
+}
+
+function calculateDuration(start, end) {
+  if (!start || !end) return 0;
+  const [sH, sM] = start.split(':').map(Number);
+  const [eH, eM] = end.split(':').map(Number);
+  let diff = (eH * 60 + eM) - (sH * 60 + sM);
+  if (diff < 0) diff += 1440; // Over midnight
+  return Math.max(1, Math.ceil(diff / 60));
+}
+
+function updateSummary() {
+  const box = document.getElementById("summaryItems");
+  const totalText = document.getElementById("totalText");
+  const autoNotes = document.getElementById("autoNotes");
+  box.innerHTML = "";
+  autoNotes.innerHTML = "";
+  let total = 0;
+
+  if (!selectedServiceId) {
+    box.innerHTML = `<div class="summary-row muted"><span>Belum pilih service</span><span>-</span></div>`;
+    totalText.textContent = rupiah(0);
+    return;
+  }
+
+  const service = services[selectedServiceId];
+  total += service.price;
+  box.innerHTML += `<div class="summary-row"><span>${service.label}</span><span>${rupiah(service.price)}</span></div>`;
+
+  // Mature Fee
+  if (selectedServiceId === "regular" && document.getElementById("age").value === "yes") {
+    total += 50000;
+    box.innerHTML += `<div class="summary-row"><span>Mature fee > 45 tahun</span><span>${rupiah(50000)}</span></div>`;
+    autoNotes.innerHTML += `<div class="note">Mature fee +50k ditambahkan.</div>`;
+  }
+
+  // Addons
+  document.querySelectorAll(".addon-check:checked").forEach(cb => {
+    let qty = 1;
+    let price = Number(cb.dataset.price);
+
+    if (cb.dataset.perhour === "yes") {
+      qty = Math.max(1, Number(document.querySelector(`.hour-input[data-for="${cb.dataset.id}"]`).value || 1));
+    } else if (cb.dataset.autocalc === "yes") {
+      const start = document.querySelector(`.start-time[data-for="${cb.dataset.id}"]`).value;
+      const end = document.querySelector(`.end-time[data-for="${cb.dataset.id}"]`).value;
+      qty = calculateDuration(start, end);
+      const noteEl = document.getElementById(`calcNote-${cb.dataset.id}`);
+      if (noteEl) noteEl.textContent = qty > 0 ? `Duration: ${qty} hour(s)` : "Fill times to calculate hours.";
+    }
+
+    if (cb.dataset.ishairclip === "yes") {
+      const rental = Number(cb.dataset.rental);
+      const deposit = Number(cb.dataset.deposit);
+      total += (rental + deposit) * qty;
+      
+      box.innerHTML += `
+        <div class="summary-row">
+          <span>${cb.dataset.label} (Sewa)${qty > 1 ? " x " + qty : ""}</span>
+          <span>${rupiah(rental * qty)}</span>
+        </div>
+        <div class="summary-row">
+          <span>${cb.dataset.label} (Deposit)${qty > 1 ? " x " + qty : ""}</span>
+          <span>${rupiah(deposit * qty)}</span>
+        </div>
+      `;
+    } else {
+      const finalAddonPrice = price * qty;
+      total += finalAddonPrice;
+      box.innerHTML += `
+        <div class="summary-row">
+          <span>${cb.dataset.label}${qty > 1 ? " x " + qty : ""}</span>
+          <span>${rupiah(finalAddonPrice)}</span>
+        </div>
+      `;
+    }
+  });
+
+  if (document.getElementById("transportArea").value === "confirm") {
+    box.innerHTML += `<div class="summary-row muted"><span>Transport luar area</span><span>Confirm</span></div>`;
+    autoNotes.innerHTML += `<div class="note">Biaya transport perlu konfirmasi manual.</div>`;
+  }
+
+  totalText.textContent = rupiah(total);
+}
+
+function initDateTimeConstraints() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById("eventDate").setAttribute("min", today);
+}
+
+document.getElementById("age").addEventListener("change", updateSummary);
+document.getElementById("transportArea").addEventListener("change", updateSummary);
+
+document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // 1. Ubah tombol saat loading
+  const btnSubmit = document.querySelector('button[type="submit"]');
+  const originalBtnText = btnSubmit.textContent;
+  btnSubmit.textContent = "MENGIRIM DATA... ⏳";
+  btnSubmit.disabled = true;
+
+  // 2. Kalkulasi Ulang Data untuk dikirim ke Sheet
+  let addonNames = [];
+  let totalAddonPrice = 0;
+  let matureFeeVal = 0;
+
+  // Cek Addon
+  document.querySelectorAll(".addon-check:checked").forEach(cb => {
+    let qty = 1;
+    if (cb.dataset.perhour === "yes") {
+      qty = Math.max(1, Number(document.querySelector('.hour-input[data-for="'+cb.dataset.id+'"]').value || 1));
+    } else if (cb.dataset.autocalc === "yes") {
+      const start = document.querySelector('.start-time[data-for="'+cb.dataset.id+'"]').value;
+      const end = document.querySelector('.end-time[data-for="'+cb.dataset.id+'"]').value;
+      qty = calculateDuration(start, end);
+    }
+    
+    let labelText = cb.dataset.label + (qty > 1 ? " (x" + qty + ")" : "");
+    addonNames.push(labelText);
+
+    if (cb.dataset.ishairclip === "yes") {
+      totalAddonPrice += (Number(cb.dataset.rental) + Number(cb.dataset.deposit)) * qty;
+    } else {
+      totalAddonPrice += Number(cb.dataset.price) * qty;
+    }
+  });
+
+  // Cek Mature Fee
+  if (selectedServiceId === "regular" && document.getElementById("age").value === "yes") {
+    matureFeeVal = 50000;
+  }
+
+  // Harga Dasar
+  let servicePriceVal = services[selectedServiceId] ? services[selectedServiceId].price : 0;
+  let totalEstimasiVal = servicePriceVal + totalAddonPrice + matureFeeVal;
+  let minimalDpVal = totalEstimasiVal * 0.5;
+
+  // 3. Susun data menjadi JSON
+  const payload = {
+    namaClient: document.getElementById("clientName").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    tanggalAcara: document.getElementById("eventDate").value,
+    jamReady: document.getElementById("readyTime").value,
+    serviceUtama: services[selectedServiceId] ? services[selectedServiceId].label : "-",
+    biayaService: servicePriceVal,
+    addonPilihan: addonNames.length > 0 ? addonNames.join(", ") : "-",
+    totalBiayaAddon: totalAddonPrice,
+    matureFee: matureFeeVal,
+    transportCharge: document.getElementById("transportArea").value === "confirm" ? "Confirm" : "Included",
+    totalEstimasi: totalEstimasiVal,
+    minimalDp: minimalDpVal
+  };
+
+  // === MASUKKAN URL DARI GOOGLE APPS SCRIPT DI SINI ===
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxC5NOo6MuICGt2vFic3OOk8oEIf_NtEFfEwynt2EQf-2vVzcHEgGqvxdMdAY_oWwWM/exec';
+      
+try {
+    // 4. Proses Pengiriman (Fetch API)
+    const response = await fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    });
+
+    if (response.ok) {
+      const responseText = await response.text();
+      let resData = { result: "success" }; // Fallback default
+      try {
+        resData = JSON.parse(responseText);
+      } catch (err) {
+        console.log("Response text is not JSON string.");
+      }
+
+      // Jika berhasil dicatat, munculkan pesan success ✨
+      const successBox = document.getElementById("successMessage");
+      successBox.style.display = "block";
+      successBox.scrollIntoView({ behavior: "smooth" });
+      
+      // 5. PENGECEKAN STATUS DP DARI SHEET RESPOND
+      // Jika isAvailable bernilai false (berarti tanggal tersebut sudah ada yang bayar DP)
+      if (resData.isAvailable === false) {
+        alert("Maaf, tanggal tersebut sudah di-booking penuh dan dikonfirmasi DP oleh client lain.");
+      } else {
+        // Jika belum ada yang bayar DP, Munculkan Struk Tagihan
+        document.getElementById("rClientName").textContent = payload.namaClient;
+        document.getElementById("rWhatsapp").textContent = payload.whatsapp;
+        document.getElementById("rEventDate").textContent = payload.tanggalAcara;
+        document.getElementById("rReadyTime").textContent = payload.jamReady;
+        document.getElementById("rService").textContent = payload.serviceUtama + " (" + rupiah(payload.biayaService) + ")";
+        document.getElementById("rAddons").textContent = payload.addonPilihan;
+        document.getElementById("rMatureFee").textContent = rupiah(payload.matureFee);
+        document.getElementById("rTransport").textContent = payload.transportCharge === "Confirm" ? "Perlu Konfirmasi" : "Termasuk Radius";
+        document.getElementById("rTotal").textContent = rupiah(payload.totalEstimasi);
+        document.getElementById("rDp").textContent = rupiah(payload.minimalDp);
+
+        // Menampilkan jendela Pop-up Struk
+        document.getElementById("receiptModal").classList.remove("hidden");
+      }
+
+      // Mengosongkan form setelah sukses
+      document.getElementById("bookingForm").reset();
+      updateSummary(); 
+    } else {
+      alert("Terjadi kesalahan saat menghubungi server Google.");
+    }
+  } catch (error) {
+    console.error("Error!", error.message);
+    alert("Gagal mengirim data. Silakan periksa koneksi internet Anda.");
+  } finally {
+    // Kembalikan tombol seperti semula
+    btnSubmit.textContent = originalBtnText;
+    btnSubmit.disabled = false;
+  }
+});
+    
+document.getElementById("topLogo").addEventListener("click", function() {
+  this.style.transform = "translateY(8px)";
+  setTimeout(() => {
+    this.style.transform = "translateY(0)";
+    setTimeout(() => { window.location.href ="https://hairdoby-ekkles.github.io/hairdo/"; }, 120);
+  }, 120);
+});
+
+document.getElementById("waLogo").addEventListener("click", function() {
+  this.style.transform = "translateY(-19px)";
+  setTimeout(() => {
+    this.style.transform = "translateY(0)";
+    setTimeout(() => {
+      const phoneNumber = "6281314798161";
+      const text = "Hello Sis, I have filled out the form and submitted the inquiry";
+      window.location.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+    }, 120);
+  }, 120);
+});
+
+// Event click untuk menutup jendela struk modal
+document.getElementById("closeReceiptBtn").addEventListener("click", () => {
+  document.getElementById("receiptModal").classList.add("hidden");
+});
+
+initServiceDropdown();
+initDateTimeConstraints();
+updateSummary();
+</script>
+</body>
+</html>
